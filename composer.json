@@ -14,9 +14,7 @@
 
   "autoload":{
     "psr-4":{
-      "Argus\\":"src"
-    },
-    "psr-4":{
+      "Argus\\":"src",
       "Codeception\\Module\\":"codeception"
     }
   }
