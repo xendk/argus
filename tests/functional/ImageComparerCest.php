@@ -23,12 +23,13 @@ class ImageComparerCest
     }
 
     // tests
-    public function tryToTest(FunctionalTester $I)
+    public function testImageComparer(FunctionalTester $I)
     {
 
         $I->amInPath($this->workDir);
         copy(codecept_data_dir() . 'image1.png', $this->workDir . '/image1.png');
         copy(codecept_data_dir() . 'image2.png', $this->workDir . '/image2.png');
+        copy(codecept_data_dir() . 'image3.png', $this->workDir . '/image3.png');
         $comparer = new ImageComparer();
 
         // Check difference between the same image.
@@ -39,6 +40,12 @@ class ImageComparerCest
 
         // Compare different images.
         $difference = $comparer->difference('image1.png', 'image2.png', 'image.diff.png');
+        $I->assertTrue($difference > 0);
+        codecept_debug($difference);
+        $I->assertTrue(file_exists('image.diff.png'));
+
+        // Compare different sized images.
+        $difference = $comparer->difference('image1.png', 'image3.png', 'image.diff.png');
         $I->assertTrue($difference > 0);
         codecept_debug($difference);
         $I->assertTrue(file_exists('image.diff.png'));
