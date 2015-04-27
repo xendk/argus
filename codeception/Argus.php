@@ -68,10 +68,11 @@ class Argus extends \Codeception\Module
 
         if (!empty($changes)) {
             $fileLines = array_map(function($file) {
+                $short_name = preg_replace('/^' . preg_quote(codecept_root_dir(), '/') . '/', '', $file);
                 if (file_exists($file . self::SUFFIX)) {
-                    return "Changed: " . $file . self::NEWSUFFIX;
+                    return "Changed: " . $short_name . self::NEWSUFFIX;
                 }
-                return "New: " . $file . self::NEWSUFFIX;
+                return "New: " . $short_name . self::NEWSUFFIX;
             }, $changes);
             $message = "Visual changes detected:\n";
             $message .= implode("\n", $fileLines);
